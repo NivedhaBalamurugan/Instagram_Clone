@@ -1,6 +1,7 @@
 const expressAsyncHandler = require('express-async-handler');
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler')
+const bcrypt = require('bcrypt')
 
 const getOneUser = asyncHandler(async (req,res) => {
 
@@ -15,7 +16,17 @@ const getOneUser = asyncHandler(async (req,res) => {
 
 })
 
-const createUser = AsyncHandler(async(req,res) => {
+const getAlluser = asyncHandler(async(req,res) => {
+
+    const response = await User.find().lean().exec()
+    if(!response?.length)
+        return res.status(400).json({"message" : "No users found"})
+    else
+        return res.status(200).json(response)
+
+})
+
+const createUser = asyncHandler(async(req,res) => {
 
     const {username,email, password,photo,photoType} = req.body
     if(!username || !email || !password)    
@@ -25,12 +36,16 @@ const createUser = AsyncHandler(async(req,res) => {
     if(dup)
         return res.status(400).json({"message" : "Duplicate username found"});
 
+    const hashedpwd = await bcrypt.hash(password, 10)
+
     const newuser = {
         "username" : username,
         "email" : email,
-        "password" : password,
-        "photo" : new Buffer.from(photo, "base64"),
-        "photoType" : photoType
+        "password" : hashedpwd
+    }
+    if(photo){
+        newuser.photo = new Buffer.from(photo, "base64")
+        newuser.photoType = photoType
     }
 
     const response = await User.create(newuser)
@@ -54,13 +69,13 @@ const updateUserProfile = asyncHandler(async (req,res) => {
     //checking whether this new username already exists
     //but also during upd , username may not be changed
     const dupuser = await User.findOne({username}).lean().exec()
-    if(dupuser && dupuser?_id.toString() !== id)
+    if(dupuser && dupuser._id.toString() !== id)
         return res.status(409).json({"message" : "Duplicate user name"})
 
     upduser.username=username
     upduser.email=email
     if(photo) {
-        upduser.photo=photo
+        upduser.photo=new Buffer.from(photo, "base64")
         upduser.photoType=photoType
     }
     if(password)
@@ -68,7 +83,7 @@ const updateUserProfile = asyncHandler(async (req,res) => {
 
     const response = await upduser.save()
     if(response)
-        res.status(200).json("message" : "Updates successfully")
+        res.status(200).json({"message" : "Updates successfully"})
     else    
         res.status(400).json({"message" : "Invalid user data"})
 
@@ -76,5 +91,7 @@ const updateUserProfile = asyncHandler(async (req,res) => {
 
 module.exports = {
     getOneUser,
+    getAlluser,
+    createUser,
     updateUserProfile
 }

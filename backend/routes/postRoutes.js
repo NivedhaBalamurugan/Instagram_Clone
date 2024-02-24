@@ -1,11 +1,16 @@
 const express = require('express')
-const router = require('Router')
+const router = express.Router()
+const {
+    getAllPosts,
+    createPost,
+    deletePost
+}   = require('../controller/postsController')
 
 router.route('/')
-    .get()      //get all posts
-    .post()     //create a apost
+    .get(getAllPosts)      //get all posts
+    .post(createPost)     //create a apost
 
 router.route('/:id')
-    .delete()   //delete a post
+    .delete(deletePost)   //delete a post
 
 module.exports = router

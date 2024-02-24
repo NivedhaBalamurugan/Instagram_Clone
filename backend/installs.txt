@@ -8,3 +8,4 @@ npm i uuid
 npm i mongoose
 npm i dotenv
 npm i express-async-handler
+npm i bcrypt

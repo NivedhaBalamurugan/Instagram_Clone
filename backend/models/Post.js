@@ -12,7 +12,7 @@ const PostSchema = new mongoose.Schema(
             required: true,
         },
         photo : {
-            type: buffer,
+            type: Buffer,
             default: "no photo",
         },
         photoType: {

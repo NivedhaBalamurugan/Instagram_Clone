@@ -14,15 +14,17 @@ const getAllPosts = asyncHandler(async(req,res) => {
 const createPost = asyncHandler(async(req,res) => {
 
     const {title,body,photo,photoType,postedBy} = req.body ;
-    if(!postedBy || !title || !body || !photo)
+    if(!postedBy || !title || !body )
         return res.status(400).json({"message" : "All details required"})
 
     const newpost = {
         "title" : title,
         "body" : body,
-        "photo" : new Buffer.from(photo, "base64"),
-        "photoType" : photoType,
-        "postedBy" : user 
+        "postedBy" : postedBy
+    }
+    if(photo)   {
+        newpost.photoType = photoType
+        newpost.photo = new Buffer.from(photo, "base64")
     }
     
     const response = await Post.create(newpost)
@@ -52,3 +54,9 @@ const deletePost = asyncHandler(async(req,res) => {
 
 
 })
+
+module.exports = {
+    getAllPosts,
+    createPost,
+    deletePost
+}
