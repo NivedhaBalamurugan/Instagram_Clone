@@ -1,0 +1,80 @@
+const expressAsyncHandler = require('express-async-handler');
+const User = require('../models/User');
+const asyncHandler = require('express-async-handler')
+
+const getOneUser = asyncHandler(async (req,res) => {
+
+    const id = req.params.id;
+    if (!id) 
+        return res.status(401).json({ "message": "id required" });
+    const founduser = await User.findById(id).exec()
+    if (!founduser) 
+        return res.status(401).json({ "message": "user not found" });
+    
+    res.status(200).json(founduser)
+
+})
+
+const createUser = AsyncHandler(async(req,res) => {
+
+    const {username,email, password,photo,photoType} = req.body
+    if(!username || !email || !password)    
+        return res.status(400).json({"message" : "All field are required"});
+
+    const dup = await User.findOne({username}).lean().exec()
+    if(dup)
+        return res.status(400).json({"message" : "Duplicate username found"});
+
+    const newuser = {
+        "username" : username,
+        "email" : email,
+        "password" : password,
+        "photo" : new Buffer.from(photo, "base64"),
+        "photoType" : photoType
+    }
+
+    const response = await User.create(newuser)
+    if(response)
+        return res.status(200).json({"message" : `User is created`});
+    else
+        return res.status(400).json({"message" : "Invalid user data"});
+
+
+})
+
+const updateUserProfile = asyncHandler(async (req,res) => {
+
+    const {id, username, email, password, photo, photoType } = req.body;
+    if(!id || !username )
+        return res.status(400).json({"message" : "All details required"})
+    const upduser = await User.findById(id).exec()
+    if(!upduser)
+        return res.status(401).json({ "message": "user not found" });
+
+    //checking whether this new username already exists
+    //but also during upd , username may not be changed
+    const dupuser = await User.findOne({username}).lean().exec()
+    if(dupuser && dupuser?_id.toString() !== id)
+        return res.status(409).json({"message" : "Duplicate user name"})
+
+    upduser.username=username
+    upduser.email=email
+    if(photo) {
+        upduser.photo=photo
+        upduser.photoType=photoType
+    }
+    if(password)
+        upduser.password = await bcrypt.hash(password,10)
+
+    const response = await upduser.save()
+    if(response)
+        res.status(200).json("message" : "Updates successfully")
+    else    
+        res.status(400).json({"message" : "Invalid user data"})
+
+})
+
+module.exports = {
+    getOneUser,
+    updateUserProfile
+}
