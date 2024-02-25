@@ -5,6 +5,9 @@ const {
     createUser,
     updateUserProfile
 }   = require('../controller/usersController')
+const verifyJWT = require('../middleware/verifyJWT')
+
+router.use(verifyJWT)
 
 router.route('/')
     .get(getAlluser)    //get all users

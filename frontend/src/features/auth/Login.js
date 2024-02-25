@@ -1,9 +1,16 @@
+import { useState ,useEffect} from "react"
+import { useNavigate } from "react-router-dom"
+
 const Login = () => {
-    return (
-        <div>
-            <h2>login</h2>
-        </div>
-    )
+
+
+    const [email,setEmail] = useState('')
+    const [password,setPassword] = useState('')
+
+    const navigate = useNavigate()
+
+    
+
 }
 
 export default Login

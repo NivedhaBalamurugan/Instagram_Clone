@@ -5,6 +5,9 @@ const {
     createPost,
     deletePost
 }   = require('../controller/postsController')
+const verifyJWT = require('../middleware/verifyJWT')
+
+router.use(verifyJWT)
 
 router.route('/')
     .get(getAllPosts)      //get all posts

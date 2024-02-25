@@ -27,10 +27,11 @@ app.use(loginHandler)
 app.use(express.json())
 app.use('/', express.static(path.join(__dirname, 'public')))    //css
 
-
+app.use('/' , require('./routes/root'))  //root page
+app.use('/auth' , require('./routes/authRoutes'))  //auth
 app.use('/users' , require('./routes/userRoutes'))  //users
 app.use('/posts' , require('./routes/postRoutes'))  //posts
-app.use('/' , require('./routes/root'))  //root page
+
 
 //custom 404
 app.all('*' , (req,res) => {
