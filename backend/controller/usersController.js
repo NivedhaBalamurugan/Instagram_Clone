@@ -3,18 +3,7 @@ const User = require('../models/User');
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
 
-const getOneUser = asyncHandler(async (req,res) => {
 
-    const id = req.params.id;
-    if (!id) 
-        return res.status(401).json({ "message": "id required" });
-    const founduser = await User.findById(id).exec()
-    if (!founduser) 
-        return res.status(401).json({ "message": "user not found" });
-    
-    res.status(200).json(founduser)
-
-})
 
 const getAlluser = asyncHandler(async(req,res) => {
 
@@ -90,7 +79,6 @@ const updateUserProfile = asyncHandler(async (req,res) => {
 })
 
 module.exports = {
-    getOneUser,
     getAlluser,
     createUser,
     updateUserProfile

@@ -1,4 +1,5 @@
 const Post = require('../models/Post')
+const User = require('../models/User')
 const asyncHandler = require('express-async-handler')
 
 const getAllPosts = asyncHandler(async(req,res) => {
@@ -6,8 +7,19 @@ const getAllPosts = asyncHandler(async(req,res) => {
     const response = await Post.find().lean()
     if(!response?.length)
         return res.status(400).json({"message" : "No posts found"})
-    else
-        return res.status(200).json(response)
+    else{
+        const newresponse = await Promise.all(response.map(async (post) => {
+            const user = await User.findById(post.postedBy).lean().exec()
+            if(!user)
+                return res.status(400).json({"message"  : "Invalid user"})
+            return {...post , username : user.username}
+
+        }))
+        return res.status(200).json(newresponse)
+    }
+
+
+    
 
 })
 

@@ -5,9 +5,81 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+.headimg{
+  
+  width: 150px;
+  height: 100px;
+}
+.headcon{
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+.headtitle{
+  font-size: 30px;
+}
+.headbody{
+  flex-grow: 1;
+  text-align: center;
+  font-size: 30px;
+}
+ul{
+  display: flex;
+  list-style-type: none;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+li{
+  padding: 10px;
+}
+.navname a{
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 900;
+  color: #000;
+}
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.postcon {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 20%;
+  max-width: 600px;
+}
+
+.postinfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.postinfo p {
+  margin-right: 10px;
+}
+
+.posttitle {
+  font-weight: bold;
+}
+
+.postimg {
+  max-width: 100%;
 }
