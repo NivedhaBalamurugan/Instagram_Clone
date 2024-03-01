@@ -25,15 +25,15 @@ const Post = ({ postId }) => {
      
 
         return (
-            <div class="posts-container">
-                <div class="postcon">
-                    <div class="postinfo">
+            <div className="posts-container">
+                <div className="postcon">
+                    <div className="postinfo">
                     <p><FaRegUserCircle />{post.username}</p>
                     <p>{timeago(post.createdAt)}</p>
                     </div>
-                    <div class="postdet">
-                    <div class="posttitle">{post.title}</div>
-                    <img class="postimg" src={ins}/>
+                    <div className="postdet">
+                    <div className="posttitle">{post.title}</div>
+                    <img className="postimg" src={ins}/>
                     <p>{post.body}</p>
                     </div>
                 </div>

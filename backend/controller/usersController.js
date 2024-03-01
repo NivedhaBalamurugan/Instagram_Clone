@@ -48,7 +48,12 @@ const createUser = asyncHandler(async(req,res) => {
 
 const updateUserProfile = asyncHandler(async (req,res) => {
 
-    const {id, username, email, password, photo, photoType } = req.body;
+    const {id, username, email, password, photo, photoType } = req.body
+   if(!id)
+   return res.status(400).json({"message" : "All details required1"})
+   if(!username)
+   return res.status(400).json({"message" : "All details required2"})
+
     if(!id || !username )
         return res.status(400).json({"message" : "All details required"})
     const upduser = await User.findById(id).exec()

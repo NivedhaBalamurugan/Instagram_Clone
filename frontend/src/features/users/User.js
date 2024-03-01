@@ -1,3 +1,4 @@
+import UpdateForm from "./UpdateForm";
 import { useGetUsersQuery } from "./usersApiSlice";
 
 const User = ({ userId }) => {
@@ -14,7 +15,6 @@ const User = ({ userId }) => {
             <div>
                 <h1>{user.username}</h1>
                 <p>{user.email}</p>
-              
             </div>
         );
     } else {
@@ -23,3 +23,6 @@ const User = ({ userId }) => {
 }
 
 export default User
+
+
+/* */

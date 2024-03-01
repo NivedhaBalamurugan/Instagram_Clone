@@ -4,6 +4,9 @@ import OuterLayout from './components/OuterLayout'
 import Login from './features/auth/Login'
 import PostList from './features/posts/PostList'
 import UserList from  './features/users/UserList'
+import Profile from './features/users/Profile'
+import UpdateForm from './features/users/UpdateForm'
+
 
 const App = () => {
     return (
@@ -24,8 +27,13 @@ const App = () => {
                     <Route path="users" >
 
                         <Route index element = { <UserList /> } />
+                        <Route path="profile" >
+                            <Route index element = { <Profile /> } />
+                            <Route path="update" element = { <UpdateForm /> } />
+                        </Route>
 
                     </Route>
+
                 </Route>
 
             </Route>

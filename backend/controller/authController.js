@@ -25,19 +25,19 @@ const login = asyncHandler(async(req,res) => {
             }
         },
         process.env.ACCESS_TOKEN_SECRET,
-        {expiresIn: '10s'}
+        {expiresIn: '15m'}
     )
 
     const refreshToken = jwt.sign(
         {"email" : email},
         process.env.REFRESH_TOKEN_SECRET,
-        {expiresIn: '20s'}
+        {expiresIn: '7d'}
     )
 
     res.cookie('jwt' , refreshToken , {
         httpOnly: true,
-      //  secure:true,
-        //sameSite: 'None',
+        secure:true,
+        sameSite: 'None',
         maxAge: 7*24*60*60*1000
     })
 
@@ -47,11 +47,11 @@ const login = asyncHandler(async(req,res) => {
 
 const refresh = asyncHandler(async(req,res) => {
 
-    console.log(cookies)
-    if(!cookies?.jwt)
+    //console.log(cookies)
+    if(!req.cookies?.jwt)
         return res.status(401).json({"message" : "Unauthorized1"})
 
-    const refreshToken = cookies.jwt
+    const refreshToken = req.cookies.jwt
     jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
@@ -72,7 +72,7 @@ const refresh = asyncHandler(async(req,res) => {
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                {expiresIn: '10s'}
+                {expiresIn: '15m'}
             )
 
             return res.status(200).json(accessToken)
@@ -91,12 +91,12 @@ const logout = asyncHandler(async(req,res) => {
 
         res.clearCookie('jwt' , {
             httpOnly: true,
-         //   secure:true,
-           // sameSite: 'None',
+            secure:true,
+            sameSite: 'None',
             maxAge: 7*24*60*60*1000
         })
 
-        res.status(200).json({"message" : "Cookie cleared"})
+        return res.status(200).json({"message" : "Cookie cleared"})
 
 })
 

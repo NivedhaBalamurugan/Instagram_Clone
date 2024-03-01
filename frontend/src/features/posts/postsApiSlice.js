@@ -16,11 +16,14 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 return response.status === 200 && !result.isError 
             },
             transformResponse: (responseData) => {
-                const loadedposts = responseData.map((post) => {
-                    post.id =post._id
-                    return post;
-                });
-                return postsAdapter.setAll(initialState,loadedposts)
+                
+                    const loadedPosts = responseData.map((post) => {
+                        post.id = post._id;
+                        return post;
+                    });
+                   
+                    return postsAdapter.setAll(initialState, loadedPosts);
+                
             },
             providesTags: (result, error, arg) => {
                 if(result?.ids) {

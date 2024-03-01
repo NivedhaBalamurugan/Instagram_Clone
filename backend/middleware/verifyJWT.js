@@ -2,10 +2,10 @@ const jwt = require('jsonwebtoken')
 
 const verifyJWT = (req,res,next) => {
 
-    const authHeader = req.headers.authorization || req.headers.Authorization;
+    const authHeader = req.headers.authorization || req.headers.Authorization
     
     if(!authHeader)
-        return res.status(401).json({"message" : "Unauthorized"})
+        return res.status(401).json({"message" : "Unauthorized22"})
 
         
     const accessToken = authHeader.split(' ')[1]
