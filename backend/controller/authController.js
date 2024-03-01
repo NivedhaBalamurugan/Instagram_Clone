@@ -21,7 +21,8 @@ const login = asyncHandler(async(req,res) => {
         {
             "UserInfo" : {
                 "username" : founduser.username,
-                "email": email
+                "email": email,
+                "id": founduser._id
             }
         },
         process.env.ACCESS_TOKEN_SECRET,
@@ -68,13 +69,13 @@ const refresh = asyncHandler(async(req,res) => {
                 {
                     "UserInfo" : {
                         "username" : founduser.username,
-                        "email": founduser.email
+                        "email": founduser.email,
+                        "id": founduser._id
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
                 {expiresIn: '15m'}
             )
-
             return res.status(200).json(accessToken)
 
         })

@@ -14,6 +14,12 @@ const UserSchema = new mongoose.Schema ({
         type: String,
         required: true,
     },
+    gender: {
+        type:String
+    },
+    bio: {
+        type:String
+    },
     photo: {
         type: Buffer,
     },

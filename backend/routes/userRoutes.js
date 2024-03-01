@@ -13,5 +13,6 @@ router.route('/')
     .get(getAlluser)    //get all users
     .post(createUser)     //create a new user
     .patch(updateUserProfile)    //update my profile details
+   
 
 module.exports = router

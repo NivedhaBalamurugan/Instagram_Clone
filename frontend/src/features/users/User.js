@@ -1,4 +1,3 @@
-import UpdateForm from "./UpdateForm";
 import { useGetUsersQuery } from "./usersApiSlice";
 
 const User = ({ userId }) => {

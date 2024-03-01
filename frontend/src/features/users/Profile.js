@@ -1,10 +1,18 @@
 import ins from '../../images/ins.jpg'
 import useAuth from '../../hooks/useAuth'
 import { Link } from 'react-router-dom'
+import { useGetUsersQuery } from "./usersApiSlice"
 
 const Profile = () => {
 
-    const {username, email} = useAuth()
+    const {username, email,id} = useAuth()
+    console.log(id)
+    const {userdet} = useGetUsersQuery("UserList" , {         //we have only id here, instead of getting all data using this query, we use a method to get the data for that noteid alone
+        selectFromResult : ({ data }) => ({                 
+            userdet : data?.entities[id]
+        }),
+    })
+console.log(userdet)
 
 
     return (
@@ -30,7 +38,7 @@ const Profile = () => {
                         <li>199 following</li>
                     </div>
                     <div className='bio'>
-                        hii<br></br>hello<br></br>nivi<br></br>
+                        {userdet.bio}
                     </div>
                 </div>
             </div>
