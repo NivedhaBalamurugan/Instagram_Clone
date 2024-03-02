@@ -4,9 +4,10 @@ import OuterLayout from './components/OuterLayout'
 import Login from './features/auth/Login'
 import PostList from './features/posts/PostList'
 import UserList from  './features/users/UserList'
-import Profile from './features/users/Profile'
+import MyProfile from './features/users/MyProfile'
 import UpdateForm from './features/users/UpdateForm'
 import Prefetch from './features/auth/PreFetch'
+import UserProfile from './features/users/UserProfile'
 
 const App = () => {
     return (
@@ -29,8 +30,9 @@ const App = () => {
                     <Route path="users" >
 
                         <Route index element = { <UserList /> } />
+                        <Route path=':id' element = { < UserProfile/> } />
                         <Route path="profile" >
-                            <Route index element = { <Profile /> } />
+                            <Route index element = { <MyProfile /> } />
                             <Route path="update" element = { <UpdateForm /> } />
                         </Route>
 

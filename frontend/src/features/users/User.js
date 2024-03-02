@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useGetUsersQuery } from "./usersApiSlice";
 
 const User = ({ userId }) => {
@@ -9,13 +10,23 @@ const User = ({ userId }) => {
         }),
     })
 
-console.log(user)
+    const navigate = useNavigate()
+
+    const handleProfile = () => {
+        navigate(`/users/${userId}`)
+    }
+
     if (user) {
        
         return (
             <div>
                 <h1>{user.username}</h1>
                 <p>{user.email}</p>
+                <button
+                    onClick={handleProfile}
+                >
+                    View Profile
+                </button>
             </div>
         );
     } else {

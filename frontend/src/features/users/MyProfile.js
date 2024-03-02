@@ -3,7 +3,7 @@ import useAuth from '../../hooks/useAuth'
 import { Link } from 'react-router-dom'
 import { useGetUsersQuery } from "./usersApiSlice"
 
-const Profile = () => {
+const MyProfile = () => {
 
     const {id} = useAuth()
    
@@ -12,6 +12,8 @@ const Profile = () => {
             userdet : data?.entities[id]
         }),
     })
+
+    
 
     return (
         <>
@@ -42,9 +44,10 @@ const Profile = () => {
             </div>
             <div>
                 <h3>My Posts</h3>
+
             </div>
         </>
     )
 }
 
-export default Profile
+export default MyProfile
