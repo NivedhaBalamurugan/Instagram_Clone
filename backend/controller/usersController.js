@@ -64,7 +64,7 @@ const updateUserProfile = asyncHandler(async (req,res) => {
     //checking whether this new username already exists
     //but also during upd , username may not be changed
     const dupuser = await User.findOne({username}).lean().exec()
-    if(dupuser && dupuser._id.toString() !== id)
+    if(dupuser && dupuser._id.toString() !== upduser._id.toString())
         return res.status(409).json({"message" : "Duplicate user name"})
 
     //to use save - u need id taken using findById.
@@ -73,9 +73,10 @@ const updateUserProfile = asyncHandler(async (req,res) => {
 
     newupduser.username=username
     newupduser.email=email
-    newupduser.gender=gender
-    newupduser.bio=bio
-   
+    if(gender)
+        newupduser.gender=gender
+    if(bio)
+        newupduser.bio=bio
     if(photo) {
         newupduser.photo=new Buffer.from(photo, "base64")
         newupduser.photoType=photoType
@@ -91,20 +92,6 @@ const updateUserProfile = asyncHandler(async (req,res) => {
 
 })
 
-const getUserId = asyncHandler(async(re,res) => {
-
-    const {username, email} = req.body
-    if(!username || !email)
-        return res.status(400).json({"message" : "All details required"})
-    const founduser = await User.findOne({email}).lean().exec()
-    if(!founduser)
-        return res.status(401).json({ "message": "user not found" });
-
-    const userId = founduser.id
-    console.log(userId)
-    return res.status(200).json(userId)
-
-})
 
 module.exports = {
     getAlluser,

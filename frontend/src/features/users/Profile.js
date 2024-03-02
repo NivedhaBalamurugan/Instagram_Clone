@@ -5,15 +5,13 @@ import { useGetUsersQuery } from "./usersApiSlice"
 
 const Profile = () => {
 
-    const {username, email,id} = useAuth()
-    console.log(id)
+    const {id} = useAuth()
+   
     const {userdet} = useGetUsersQuery("UserList" , {         //we have only id here, instead of getting all data using this query, we use a method to get the data for that noteid alone
         selectFromResult : ({ data }) => ({                 
             userdet : data?.entities[id]
         }),
     })
-console.log(userdet)
-
 
     return (
         <>
@@ -23,7 +21,7 @@ console.log(userdet)
                 </div>
                 <div className='profile_con' >
                     <div className='firstline'>    
-                        <h2>{username}</h2>
+                        <h2>{userdet.username}</h2>
                         <Link to="./update" >
                             <button 
                                 className='edit_btn'

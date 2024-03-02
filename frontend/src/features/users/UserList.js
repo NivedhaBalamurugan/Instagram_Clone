@@ -11,7 +11,7 @@ const UserList = () => {
         error
     } = useGetUsersQuery ( 'UserList' ,
          {
-            pollingInterval: 15000,
+            pollingInterval: 30000,
             refetchOnFocus : true,
             refetchOnMountOrArgChange: true
         }

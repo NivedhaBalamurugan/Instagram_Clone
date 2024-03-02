@@ -39,7 +39,7 @@ const UpdateForm = () => {
 
     const onClickUpdateProfile = async () => {
 
-        const result = await UpdateProfile({username:user, email, password })
+        const result = await UpdateProfile({username:user, email, password,gender, bio })
     }
 
     const errClass = isError ? "errmsg" : "dont_show"
@@ -120,8 +120,9 @@ const UpdateForm = () => {
                             {val}
                             <input
                                 type="radio"
-                                id="gender"
+                                id={val}
                                 name="gender"
+                                key={val}
                                 onChange={(e) => setGender(e.target.value)}
                             />
                             <span className="checkmark"></span>

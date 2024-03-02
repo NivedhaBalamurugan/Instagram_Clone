@@ -6,7 +6,7 @@ import PostList from './features/posts/PostList'
 import UserList from  './features/users/UserList'
 import Profile from './features/users/Profile'
 import UpdateForm from './features/users/UpdateForm'
-
+import Prefetch from './features/auth/PreFetch'
 
 const App = () => {
     return (
@@ -15,6 +15,8 @@ const App = () => {
             <Route path="/" element = { <OuterLayout /> } >
 
                 <Route index element = { <Login /> } />
+
+                <Route element = { <Prefetch /> } >
                 
                 <Route element = { <Layout /> } >
 
@@ -33,6 +35,8 @@ const App = () => {
                         </Route>
 
                     </Route>
+
+                </Route>    
 
                 </Route>
 
