@@ -67,8 +67,41 @@ const deletePost = asyncHandler(async(req,res) => {
 
 })
 
+
+const updatePost = asyncHandler(async(req,res) => {
+
+    const {id , likedBy, dislikedBy } = req.body
+    if(!id)
+        return res.status(400).json({"message" : "id required"})
+
+    const updpost = await Post.findById(id).exec()
+
+    if(!updpost)
+        return res.status(400).json({ "message": "post not found" });
+    
+    if(likedBy) {
+        updpost.likes.push(likedBy)
+    }
+    else {
+
+        const index = updpost.likes.indexOf(dislikedBy)
+        if(index !== -1)
+            updpost.likes.splice(index, 1);
+
+    }
+    
+    
+    const response = await updpost.save()
+    if(response)
+        res.status(200).json({"message" : "Updates successfully"})
+    else    
+        res.status(400).json({"message" : "Invalid post data"})
+
+})
+
 module.exports = {
     getAllPosts,
     createPost,
-    deletePost
+    deletePost,
+    updatePost
 }

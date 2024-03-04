@@ -1,21 +1,9 @@
-import { useGetPostsQuery } from "./postsApiSlice";
 import Post from './Post'
+import GetPosts from './GetPosts'
 
 const PostList = () => {
 
-    const {
-        data:posts,
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    } = useGetPostsQuery ( 'PostList' ,
-         {
-            pollingInterval: 30000,
-            refetchOnFocus : true,
-            refetchOnMountOrArgChange: true
-        }
-    )
+    const {posts, isLoading, isSuccess, isError, error } = GetPosts()
 
     let content 
     if(isLoading)

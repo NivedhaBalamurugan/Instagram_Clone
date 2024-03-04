@@ -227,3 +227,13 @@ input[type="radio"] {
 .dont_show{
   display:none;
 }
+
+.like svg{
+  color: red;
+}
+
+.dislike svg {
+  color: white;
+  stroke: #000;
+  stroke-width: 20px;
+}

@@ -36,6 +36,22 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 else
                     return [{ type: 'Post' , id : 'LIST' }]
             }
+        }) , 
+
+
+        updatePosts : builder.mutation ({
+
+            query: (initialPostData) => ({
+                url: '/posts',
+                method : 'PATCH',
+                body : {
+                    ...initialPostData,
+                }
+            }),
+            invalidatesTags : (result, err, arg) => [
+                {type: 'Post' , id: arg.id}
+            ]
+
         })
 
     })
@@ -44,6 +60,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
 })
 
 export const {
-    useGetPostsQuery
+    useGetPostsQuery,
+    useUpdatePostsMutation
 } = postsApiSlice
 
