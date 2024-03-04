@@ -1,5 +1,6 @@
 import { useGetUsersQuery } from "./usersApiSlice";
 import User from './User'
+import useAuth from "../../hooks/useAuth";
 
 const UserList = () => {
 
@@ -17,6 +18,8 @@ const UserList = () => {
         }
     )
 
+    const {id} = useAuth()
+
     let content 
     if(isLoading)
         content = <p>Loading...</p>
@@ -24,14 +27,17 @@ const UserList = () => {
         content = <p className="errmsg">{error?.data?.message}</p>
     if(isSuccess){
 
-       if(users && users.ids && users.ids.length)
-        {
-                const {ids} = users
-                content = ids.map((userId) => <User key={userId} userId={userId} />)
-                
+       if (users?.ids?.length) {
+
+            content = users.ids
+                .filter(userId => userId !== id)
+                .map(userId => <User key={userId} userId={userId} />)
+        
+        } 
+        else {
+            content = <p>No users found...</p>;
         }
-        else
-            content = <p>No users found...</p>
+
 
     }
 

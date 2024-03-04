@@ -237,3 +237,11 @@ input[type="radio"] {
   stroke: #000;
   stroke-width: 20px;
 }
+
+.index_form , input[type="text"] {
+  width: 150px;
+  padding: 10px;
+}
+.sendicon{
+  margin-left: 10px;
+}

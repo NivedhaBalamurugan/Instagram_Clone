@@ -2,26 +2,44 @@ const Post = require('../models/Post')
 const User = require('../models/User')
 const asyncHandler = require('express-async-handler')
 
-const getAllPosts = asyncHandler(async(req,res) => {
+const getAllPosts = asyncHandler(async (req, res) => {
 
-    const response = await Post.find().lean()
-    if(!response?.length)
-        return res.status(400).json({"message" : "No posts found"})
-    else{
-        const newresponse = await Promise.all(response.map(async (post) => {
+    const posts = await Post.find().lean();
+    if (!posts?.length) 
+        return res.status(400).json({ "message": "No posts found" });
+    else 
+    {
+    
+        //fetch usernames for posts
+        const postsWithUsernames = await Promise.all(posts.map(async (post) => {
+            
             const user = await User.findById(post.postedBy).lean().exec()
-            if(!user)
-                return res.status(400).json({"message"  : "Invalid user"})
-            return {...post , username : user.username}
+            if (!user) 
+                return res.status(400).json({ "message": "Invalid user" })
+            
+
+            // Fetch usernames for comments
+            const commentsWithUsernames = await Promise.all(post.comments.map(async (comment) => {
+
+                const commentUser = await User.findById(comment.com_postedBy).lean().exec()
+                if (!commentUser) 
+                    return res.status(400).json({ "message": "Invalid user" })
+                
+                return { ...comment, com_username: commentUser.username }
+
+            }))
+            
+            return { ...post, username: user.username, comments: commentsWithUsernames }
+
 
         }))
-        return res.status(200).json(newresponse)
+        return res.status(200).json(postsWithUsernames);
+
     }
 
 
-    
-
 })
+
 
 const createPost = asyncHandler(async(req,res) => {
 
@@ -70,7 +88,7 @@ const deletePost = asyncHandler(async(req,res) => {
 
 const updatePost = asyncHandler(async(req,res) => {
 
-    const {id , likedBy, dislikedBy } = req.body
+    const {id , likedBy, dislikedBy , comment, commentedBy } = req.body
     if(!id)
         return res.status(400).json({"message" : "id required"})
 
@@ -82,14 +100,20 @@ const updatePost = asyncHandler(async(req,res) => {
     if(likedBy) {
         updpost.likes.push(likedBy)
     }
-    else {
+    else if(dislikedBy){
 
         const index = updpost.likes.indexOf(dislikedBy)
         if(index !== -1)
             updpost.likes.splice(index, 1);
 
     }
-    
+    else if(comment) {
+        const cts = {
+            text : comment,
+            com_postedBy : commentedBy
+        }
+        updpost.comments.push(cts)
+    }
     
     const response = await updpost.save()
     if(response)

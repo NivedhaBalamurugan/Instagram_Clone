@@ -27,7 +27,7 @@ const UserProfile = () => {
         content = <p className="errmsg">{error?.data?.message}</p>
     
     const {ids} = posts
-  //  console.log(ids)
+
 
     if(isSuccess) 
     {
@@ -68,8 +68,3 @@ const UserProfile = () => {
 
 export default UserProfile
 
-/*{
-                        ids.map((postId) => (
-                            ids.map((postId) => <Post key={postId} postId={postId} userId={id}/>)
-                        ))
-                    }*/

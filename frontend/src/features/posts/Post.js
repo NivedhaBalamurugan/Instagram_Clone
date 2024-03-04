@@ -3,6 +3,7 @@ import ins from '../../images/ins.jpg'
 import { FaRegUserCircle } from "react-icons/fa"
 import { parseISO, formatDistanceToNow } from 'date-fns'
 import Reactions from './Reactions'
+import Comments from './Comments'
 
 const Post = ({ postId , userId}) => {
   
@@ -38,6 +39,7 @@ const Post = ({ postId , userId}) => {
                             <p>{post.body}</p>
                         </div>
                         <Reactions postId = {postId} likes={post.likes}/>
+                        <Comments postId = {postId} />
                     </div>
                 </div>
         )

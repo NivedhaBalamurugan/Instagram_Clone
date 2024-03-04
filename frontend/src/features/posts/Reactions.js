@@ -40,9 +40,9 @@ const Reactions = ({postId , likes}) => {
         
     }
 
-    const errClass = isError ? "errmsg" : "offscreen"
-    const errContent = (error?.data?.message)
-
+    const errClass = isError ? "errmsg" : "dont_show"
+    const errContent = isError ? (error?.data?.message) : " "
+ 
     return (
 
 
